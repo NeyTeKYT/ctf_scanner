@@ -1,4 +1,4 @@
-from modules.utils import run_command, print_log
+from modules.utils import run_command, print_result
 import re
 from modules.config import config
 
@@ -31,7 +31,7 @@ def parse_open_ports(nmap_result):
                 "version": version
             }
 
-            print_log(
+            print_result(
                 f"[+] Open port found: "
                 f"{f'{port}/{proto}':<10} "
                 f"Service: {service:<15} "

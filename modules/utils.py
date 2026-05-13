@@ -28,7 +28,7 @@ def fatal(message):
 
 def run_command(command, label, filepath):
 
-    print(f"[*] Running {label}...")
+    print(f"\n[*] Running {label}...")
 
     result = subprocess.run(command, text=True, capture_output=True)
     

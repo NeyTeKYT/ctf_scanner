@@ -8,7 +8,7 @@ def ask_ctf_name():
     while True:
         ctf_name = input("[?] Enter the CTF name (e.g. Basic_Pentesting): ").strip()
         if not ctf_name:
-            print("[!] The CTF name cannot be empty: It will be part of the folder name containing the results!\n")
+            print("[!] The CTF name cannot be empty! It will be part of the folder name containing the results\n")
             continue
         if " " in ctf_name:
             print("[!] Use underscores instead of spaces (e.g. Basic_Pentesting)\n")
@@ -35,9 +35,9 @@ def find_existing_ctf_name_folders(ctf_name):
 def ask_fresh_start():
 
     while True:
-        answer = input(f"\n[?] Do you want to start fresh for the new target? (y/n): ").strip().lower()
+        answer = input(f"[?] Do you want to start fresh for the new target? (y/n): ").strip().lower()
         if answer != "y" and answer != "n":
-            print("[!] Only allowed answers are 'y' and 'n' !\n")
+            print("\n[!] Only allowed answers are 'y' and 'n' !\n")
             continue
         break
 
@@ -64,12 +64,11 @@ def verifying_folder(folder, ctf_name):
         
         fresh_start = ask_fresh_start()
 
-        if not answer:
+        if not fresh_start:
             fatal("Exiting: no changes to be made")
 
     # Brand new CTF or confirmed fresh start
     folder_exists = False
-    print(f"[+] Starting new CTF: '{ctf_name}' on {config.target}")
 
 def create_output_folder():
 
@@ -95,3 +94,13 @@ def save_result(content, filepath):
         f.write(content)
     
     print(f"[+] Results saved to {filepath}")
+
+def scan_completed(filename, port=None, service=None):
+
+    # Check if a tool has already produced a non-empty result file
+    if port and service:
+        filepath = f"{config.output_folder}/{port}_{service}/{filename}"
+    else:
+        filepath = f"{config.output_folder}/{filename}"
+
+    return os.path.exists(filepath) and os.path.getsize(filepath) > 0
